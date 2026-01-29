@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLCFYN - Financial Services Investment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #ffffff;
+            color: #0a0a0a;
+            overflow-x: hidden;
+        }
+
+        /* Canvas Background */
+        #globe-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: all;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-decoration: none;
+            color: #0a0a0a;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .logo-fin {
+            width: 40px;
+            height: 40px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo-fin svg {
+            width: 100%;
+            height: 100%;
+            fill: #0a0a0a;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #555;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            color: #0a0a0a;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #0a0a0a;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: left;
+            position: relative;
+            z-index: 10;
+            pointer-events: none;
+            padding: 0 10%;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            pointer-events: auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.0;
+            letter-spacing: -3px;
+            color: #0a0a0a;
+            text-transform: uppercase;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #555;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        .hero-values {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .hero-values span {
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .hero-values span::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 4px;
+            background: #0a0a0a;
+            border-radius: 50%;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: #888;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: bounce 2s infinite;
+            pointer-events: auto;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .content-section {
+            position: relative;
+            z-index: 20;
+            background: linear-gradient(to bottom, transparent 0%, #ffffff 15%);
+            padding: 10rem 10% 6rem;
+        }
+
+        .section-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: start;
+        }
+
+        .section-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .section-content p {
+            color: #555;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .strategy-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .strategy-card {
+            background: #ffffff;
+            border: 2px solid #0a0a0a;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .strategy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+            z-index: 0;
+        }
+
+        .strategy-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .strategy-card>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .strategy-card:hover h3,
+        .strategy-card:hover p {
+            color: #ffffff;
+        }
+
+        .strategy-card h3 {
+            color: #0a0a0a;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .strategy-card p {
+            color: #666;
+            font-size: 1rem;
+            margin: 0;
+            transition: color 0.3s;
+        }
+
+        .locations-section {
+            padding: 8rem 10%;
+            position: relative;
+            z-index: 20;
+            background: #ffffff;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .section-header p {
+            color: #666;
+            font-size: 1.3rem;
+            font-style: italic;
+        }
+
+        .tagline {
+            text-align: center;
+            color: #555;
+            font-size: 1.4rem;
+            margin-bottom: 4rem;
+            font-weight: 400;
+        }
+
+        .divider {
+            width: 100px;
+            height: 2px;
+            background: #0a0a0a;
+            margin: 4rem auto;
+        }
+
+        .offices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .office-card {
+            padding: 2.5rem;
+            border: 2px solid #e9ecef;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            background: #ffffff;
+        }
+
+        .office-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #0a0a0a;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .office-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .office-card:hover {
+            border-color: #0a0a0a;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .office-city {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #0a0a0a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .office-address {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .esg-section {
+            padding: 8rem 10%;
+            position: relative;
+            z-index: 20;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .esg-label {
+            color: #0a0a0a;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .esg-grid {
+            display: flex;
+            justify-content: center;
+            gap: 5rem;
+            margin: 4rem 0;
+            flex-wrap: wrap;
+        }
+
+        .esg-item h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .esg-item p {
+            color: #666;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .esg-description {
+            max-width: 800px;
+            margin: 2rem auto;
+            color: #555;
+            font-size: 1.3rem;
+            line-height: 1.8;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: #0a0a0a;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            border: 2px solid #0a0a0a;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: #0a0a0a;
+        }
+
+        footer {
+            background: #0a0a0a;
+            padding: 4rem 10%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+            position: relative;
+            z-index: 20;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 0 5%;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .section-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-values {
+                justify-content: center;
+            }
+
+            .esg-grid {
+                gap: 2rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+    <base target="_blank">
+</head>
+
+<body>
+    <canvas id="globe-canvas"></canvas>
+
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <span class="logo-fin">
+                <svg viewBox="0 0 100 100">
+                    <path d="M50 10 L90 50 L50 90 L50 70 L70 50 L50 30 Z" fill="#0a0a0a" />
+                    <path d="M50 30 L30 50 L50 70 L50 30 Z" fill="#0a0a0a" />
+                </svg>
+            </span>
+            BLCFYN
+        </a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#strategy">Strategy</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#esg">ESG</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Investors in Financial Services</h1>
+            <p class="hero-subtitle">Strategic investments across Europe with operational excellence</p>
+            <div class="hero-values">
+                <span>Entrepreneurial</span>
+                <span>Specialized</span>
+                <span>Value Creation</span>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+        </div>
+    </section>
+
+    <section class="content-section" id="strategy">
+        <div class="section-grid">
+            <div class="section-content">
+                <h2>Our Strategy</h2>
+                <p>We combine deep sector expertise with hands-on operational capabilities to transform financial
+                    services businesses across Europe.</p>
+                <p>Focusing on asset-light models and technology-enabled growth in both established and emerging
+                    markets.</p>
+            </div>
+            <div class="strategy-cards">
+                <div class="strategy-card">
+                    <h3>Buyout Strategy</h3>
+                    <p>Investing in high-quality financial services companies with proven cash flows and scalable
+                        operations.</p>
+                </div>
+                <div class="strategy-card">
+                    <h3>Growth Strategy</h3>
+                    <p>Backing innovative FinTech companies reshaping the future of financial services and digital
+                        transformation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="locations-section" id="team">
+        <div class="section-header">
+            <h2>Our Presence</h2>
+            <p>Transforming complexity into sustainable value</p>
+        </div>
+        <p class="tagline">Five strategic locations across Western Europe</p>
+        <div class="divider"></div>
+        <div class="offices-grid">
+            <div class="office-card">
+                <div class="office-city">Paris</div>
+                <div class="office-address">2 Place Rio de Janeiro<br>75008 Paris</div>
+            </div>
+            <div class="office-card">
+                <div class="office-city">Amsterdam</div>
+                <div class="office-address">43 Roemer Visscherstraat<br>1054 EW Amsterdam</div>
+            </div>
+            <div class="office-card">
+                <div class="office-city">Brussels</div>
+                <div class="office-address">106 Avenue Louise<br>1050 Brussels</div>
+            </div>
+            <div class="office-card">
+                <div class="office-city">Frankfurt</div>
+                <div class="office-address">Ulmenstrasse 37-39<br>60325 Frankfurt</div>
+            </div>
+            <div class="office-card">
+                <div class="office-city">London</div>
+                <div class="office-address">40 Bruton Street<br>London W1J 6QZ</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="esg-section" id="esg">
+        <span class="esg-label">Responsible Investment</span>
+        <div class="esg-grid">
+            <div class="esg-item">
+                <h3>Environmental</h3>
+            </div>
+            <div class="esg-item">
+                <h3>Social</h3>
+            </div>
+            <div class="esg-item">
+                <h3>Governance</h3>
+            </div>
+        </div>
+        <p class="esg-description">
+            Committed to the highest ethical standards, integrity and transparency — the foundations of our investment
+            philosophy.
+        </p>
+        <a href="#" class="btn">Learn More</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 BLCFYN Capital Partners. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        import * as THREE from 'https://esm.sh/three@0.160.0';
+
+        // Scene setup
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xffffff);
+
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 0, 10);
+
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById('globe-canvas'),
+            antialias: true
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const mainGroup = new THREE.Group();
+        scene.add(mainGroup);
+
+        // === GLOBE - 40% BIGGER ===
+        const globeRadius = 3.5; // Increased from 2.5 (40% bigger)
+
+        // Main wireframe sphere
+        const globeGeo = new THREE.IcosahedronGeometry(globeRadius, 2);
+        const globeMat = new THREE.MeshBasicMaterial({
+            color: 0x0a0a0a,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.6
+        });
+        const globe = new THREE.Mesh(globeGeo, globeMat);
+        mainGroup.add(globe);
+
+        // Dots at vertices - also bigger
+        const positions = globeGeo.attributes.position.array;
+        const dotGeo = new THREE.BufferGeometry();
+        dotGeo.setAttribute('position', new THREE.BufferAttribute(positions.slice(), 3));
+        const dotMat = new THREE.PointsMaterial({
+            color: 0x0a0a0a,
+            size: 0.14, // Bigger dots too
+            transparent: true,
+            opacity: 0.9
+        });
+        const dots = new THREE.Points(dotGeo, dotMat);
+        mainGroup.add(dots);
+
+        // === FLOATING NETWORK ===
+        const networkGroup = new THREE.Group();
+        mainGroup.add(networkGroup);
+
+        // Network points - scaled with globe
+        const networkCount = 100;
+        const networkPos = [];
+
+        for (let i = 0; i < networkCount; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 7 + Math.random() * 5; // Scaled up
+            const height = (Math.random() - 0.5) * 8; // Scaled up
+
+            networkPos.push(
+                Math.cos(angle) * radius,
+                height,
+                Math.sin(angle) * radius
+            );
+        }
+
+        const networkGeo = new THREE.BufferGeometry();
+        networkGeo.setAttribute('position', new THREE.Float32BufferAttribute(networkPos, 3));
+        const networkDotMat = new THREE.PointsMaterial({
+            color: 0x0a0a0a,
+            size: 0.08, // Bigger
+            transparent: true,
+            opacity: 0.74
+        });
+        const networkDots = new THREE.Points(networkGeo, networkDotMat);
+        networkGroup.add(networkDots);
+
+        // Connection lines
+        const lineGeo = new THREE.BufferGeometry();
+        const linePositions = [];
+
+        for (let i = 0; i < networkCount; i++) {
+            for (let j = i + 1; j < networkCount; j++) {
+                const dx = networkPos[i * 3] - networkPos[j * 3];
+                const dy = networkPos[i * 3 + 1] - networkPos[j * 3 + 1];
+                const dz = networkPos[i * 3 + 2] - networkPos[j * 3 + 2];
+                const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                if (dist < 5.5 && Math.random() < 0.105) {
+                    linePositions.push(
+                        networkPos[i * 3], networkPos[i * 3 + 1], networkPos[i * 3 + 2],
+                        networkPos[j * 3], networkPos[j * 3 + 1], networkPos[j * 3 + 2]
+                    );
+                }
+            }
+        }
+
+        lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+        const lineMat = new THREE.LineBasicMaterial({
+            color: 0x0a0a0a,
+            transparent: true,
+            opacity: 0.19
+        });
+        const lines = new THREE.LineSegments(lineGeo, lineMat);
+        networkGroup.add(lines);
+
+        // === INITIAL POSITION - ADJUSTED FOR BIGGER SIZE ===
+        mainGroup.position.set(5.75, 0, -2);
+        mainGroup.rotation.y = -Math.PI / 4;
+        mainGroup.scale.setScalar(1.54); // 10% bigger than before
+
+        // Animation
+        let scrollY = 0;
+        let targetScrollY = 0;
+
+        window.addEventListener('scroll', () => {
+            targetScrollY = window.scrollY;
+        }, { passive: true });
+
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = clock.getElapsedTime();
+
+            scrollY += (targetScrollY - scrollY) * 0.1;
+
+            // Globe rotation
+            globe.rotation.y = time * 0.1;
+            dots.rotation.y = time * 0.1;
+
+            // Network animation
+            networkGroup.rotation.y = time * 0.05;
+            networkDotMat.opacity = 0.74 + Math.sin(time * 2) * 0.1;
+            lineMat.opacity = 0.19 + Math.sin(time * 1.5) * 0.03;
+
+            // Subtle scroll
+            const scrollFactor = Math.min(scrollY / 800, 1);
+            const ease = 1 - Math.pow(1 - scrollFactor, 3);
+
+            const startX = 5.75;
+            const endX = 2.3;
+            const startZ = -2;
+            const endZ = -1;
+
+            mainGroup.position.x = startX + (endX - startX) * ease;
+            mainGroup.position.z = startZ + (endZ - startZ) * ease;
+            mainGroup.position.y = Math.sin(time * 0.5) * 0.1;
+
+            const startRot = -Math.PI / 4;
+            const endRot = -Math.PI / 6;
+            mainGroup.rotation.y = startRot + (endRot - startRot) * ease;
+
+            const startScale = 1.54; // 10% bigger
+            const endScale = 1.21;
+            mainGroup.scale.setScalar(startScale + (endScale - startScale) * ease);
+
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+
+</html>
