@@ -1,9 +1,26 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 
 const ChartsSection = () => {
+    const sectionRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "end start"]
+    });
+
+    const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+
     return (
-        <section className="relative w-full min-h-screen bg-black text-white py-24 px-6 lg:px-16 overflow-hidden bg-cover bg-center" style={{ backgroundImage: "url('/charts-bg.png')" }}>
-            <div className="max-w-[1920px] mx-auto px-6 lg:px-16">
+        <section ref={sectionRef} className="relative w-full min-h-screen bg-black text-white py-24 px-6 lg:px-16 overflow-hidden">
+            {/* Parallax Background */}
+            <motion.div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{
+                    backgroundImage: "url('/charts-bg.png')",
+                    y
+                }}
+            />
+            <div className="relative z-10 max-w-[1920px] mx-auto px-6 lg:px-16">
 
                 {/* Intro Text */}
                 <motion.div

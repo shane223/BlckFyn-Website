@@ -17,8 +17,8 @@ function App() {
         <HeroSection />
         <Suspense fallback={<div className="h-screen w-full bg-[#0a0a0a]" />}>
           <ChartsSection />
-          <StrategySection />
           <WhyItWorksSection />
+          <StrategySection />
           <HighlightSection />
         </Suspense>
       </main>

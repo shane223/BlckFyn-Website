@@ -1,9 +1,14 @@
-import { useEffect, useRef } from 'react';
+import { useRef, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import * as THREE from 'three';
 
 const StrategySection = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "end start"]
+    });
     const scrollProgress = useRef(0);
     const targetScrollProgress = useRef(0);
 
@@ -289,11 +294,20 @@ const StrategySection = () => {
     }, []);
 
     return (
-        <section
-            ref={containerRef}
-            id="strategy"
-            className="relative min-h-screen w-full overflow-hidden bg-[#0a0a0a]"
-        >
+        <section ref={containerRef} className="relative w-full min-h-screen bg-[#0a0a0a] overflow-hidden">
+
+            {/* Transition Curtain Bars - positioned at top of section */}
+            <div className="absolute inset-0 z-40 pointer-events-none flex items-start">
+                {[140, 90, 160, 85, 130].map((h, i) => (
+                    <TransitionBar
+                        key={i}
+                        heightPct={h}
+                        scrollProgress={scrollYProgress}
+                        speed={0.3 + (i * 0.05)}
+                    />
+                ))}
+            </div>
+
             {/* Three.js Canvas */}
             <canvas
                 ref={canvasRef}
@@ -341,6 +355,20 @@ const StrategySection = () => {
                 </div>
             </div>
         </section>
+    );
+};
+
+const TransitionBar = ({ heightPct, scrollProgress, speed }: { heightPct: number, scrollProgress: any, speed: number }) => {
+    const y = useTransform(scrollProgress, [0, speed], ["0%", "-100%"]);
+
+    return (
+        <motion.div
+            className="flex-1 bg-white relative"
+            style={{
+                height: `${heightPct}%`,
+                y,
+            }}
+        />
     );
 };
 
