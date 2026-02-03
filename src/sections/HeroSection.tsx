@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import * as THREE from 'three';
 
 const HeroSection = () => {
@@ -6,6 +7,13 @@ const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollY = useRef(0);
   const targetScrollY = useRef(0);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]); // Parallax effect
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -238,9 +246,17 @@ const HeroSection = () => {
     <section
       ref={containerRef}
       id="about"
-      className="relative h-screen w-full overflow-hidden bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: 'url(/hero-bg.png)' }}
+      className="relative h-screen w-full overflow-hidden"
     >
+      {/* Parallax Background */}
+      <motion.div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
+        style={{
+          backgroundImage: 'url(/hero-bg.png)',
+          y: backgroundY
+        }}
+      />
+
       {/* Three.js Canvas */}
       <canvas
         ref={canvasRef}
@@ -250,29 +266,29 @@ const HeroSection = () => {
 
       {/* Content Overlay */}
       <div className="relative z-10 h-full flex items-center px-6 lg:px-16">
-        <div className="max-w-2xl">
-          <h1 className="heading-xl text-black mb-6">
-            Investors in
-            <br />
-            Financial Services
+        <div className="max-w-4xl">
+          <h1 className="heading-xl text-black mb-6 uppercase">
+            We Bridge The
+            <br />Gap &amp; Connect
+            <br /> The Dots.
           </h1>
-          <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-light leading-relaxed">
-            Strategic investments across Europe with operational excellence
+          <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-light leading-relaxed max-w-3xl">
+            Closing the distance between your current operations and your future scale through Bespoke IT Strategy, Applied AI, and Seamless Automation
           </p>
-          <div className="flex flex-wrap gap-6 text-sm uppercase tracking-widest text-gray-500 font-semibold">
-            <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-black rounded-full" />
-              Entrepreneurial
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-black rounded-full" />
-              Specialized
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-black rounded-full" />
-              Value Creation
-            </span>
-          </div>
+          <ul className="flex flex-col gap-3 text-sm lg:text-base font-semibold text-gray-800 tracking-wide">
+            <li className="flex items-center gap-3">
+              <span className="w-2 h-2 bg-black rounded-full" />
+              <span>STRATEGIC <span className="text-gray-500 font-normal">(IT & AI Consultation)</span></span>
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="w-2 h-2 bg-black rounded-full" />
+              <span>INTELLIGENT <span className="text-gray-500 font-normal">(Agentic App Development)</span></span>
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="w-2 h-2 bg-black rounded-full" />
+              <span>CONNECTED <span className="text-gray-500 font-normal">(Digital Automation)</span></span>
+            </li>
+          </ul>
         </div>
       </div>
 
