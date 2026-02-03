@@ -241,7 +241,11 @@ const WaveSection = () => {
     <section
       ref={containerRef}
       id="strategy"
-      className="relative min-h-screen w-full overflow-hidden bg-white"
+      className="relative min-h-screen w-full overflow-hidden"
+      style={{
+        background: 'linear-gradient(to bottom, transparent 0%, #ffffff 15%)',
+        zIndex: 20
+      }}
     >
       {/* Three.js Canvas */}
       <canvas

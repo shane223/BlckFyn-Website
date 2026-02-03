@@ -1,47 +1,26 @@
-import { useEffect, useRef } from 'react';
+import { Suspense, lazy } from 'react';
 import Navbar from './sections/Navbar';
 import HeroSection from './sections/HeroSection';
-import WaveSection from './sections/WaveSection';
-import OrbitSection from './sections/OrbitSection';
-import LocationsSection from './sections/LocationsSection';
-import ESGSection from './sections/ESGSection';
 import Footer from './sections/Footer';
 
+// Lazy load heavy 3D sections to improve initial load performance
+const StrategySection = lazy(() => import('./sections/StrategySection'));
+const ChartsSection = lazy(() => import('./sections/ChartsSection'));
+const WhyItWorksSection = lazy(() => import('./sections/WhyItWorksSection'));
+const HighlightSection = lazy(() => import('./sections/HighlightSection'));
+
 function App() {
-  const scrollRef = useRef(0);
-  const targetScrollRef = useRef(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      targetScrollRef.current = window.scrollY;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Smooth scroll animation loop
-  useEffect(() => {
-    let animationId: number;
-
-    const animate = () => {
-      scrollRef.current += (targetScrollRef.current - scrollRef.current) * 0.1;
-      animationId = requestAnimationFrame(animate);
-    };
-
-    animationId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationId);
-  }, []);
-
   return (
     <div className="relative bg-white">
       <Navbar />
       <main>
         <HeroSection />
-        <WaveSection />
-        <OrbitSection />
-        <LocationsSection />
-        <ESGSection />
+        <Suspense fallback={<div className="h-screen w-full bg-[#0a0a0a]" />}>
+          <ChartsSection />
+          <StrategySection />
+          <WhyItWorksSection />
+          <HighlightSection />
+        </Suspense>
       </main>
       <Footer />
     </div>
@@ -49,3 +28,4 @@ function App() {
 }
 
 export default App;
+

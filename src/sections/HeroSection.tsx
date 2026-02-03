@@ -16,7 +16,7 @@ const HeroSection = () => {
 
     // Scene setup
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xffffff);
+    scene.background = null; // Transparent background to show CSS image
 
     const camera = new THREE.PerspectiveCamera(
       50,
@@ -43,10 +43,10 @@ const HeroSection = () => {
     // Main wireframe sphere
     const globeGeo = new THREE.IcosahedronGeometry(globeRadius, 2);
     const globeMat = new THREE.MeshBasicMaterial({
-      color: 0x0a0a0a,
+      color: 0x333333, // Lighter than 0x111111
       wireframe: true,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.4, // Slightly reduced opacity
     });
     const globe = new THREE.Mesh(globeGeo, globeMat);
     mainGroup.add(globe);
@@ -55,11 +55,32 @@ const HeroSection = () => {
     const positions = globeGeo.attributes.position.array;
     const dotGeo = new THREE.BufferGeometry();
     dotGeo.setAttribute('position', new THREE.BufferAttribute(positions.slice(), 3));
+
+    // Add colors to dots
+    const dotColors: number[] = [];
+    const color = new THREE.Color();
+    const posAttribute = globeGeo.attributes.position;
+
+    for (let i = 0; i < posAttribute.count; i++) {
+      // Use position to determine color (visualize as a spectrum)
+      const y = posAttribute.getY(i);
+
+      // "Gradient and random" - Mix position-based hue with randomness
+      // Base hue from Y position for gradient + random offset
+      let hue = (y / globeRadius + 1) / 2;
+      hue += (Math.random() - 0.5) * 0.2; // Add randomness to the gradient
+
+      color.setHSL(hue % 1, 1.0, 0.45); // Darker tone (lower lightness)
+      dotColors.push(color.r, color.g, color.b);
+    }
+
+    dotGeo.setAttribute('color', new THREE.Float32BufferAttribute(dotColors, 3));
+
     const dotMat = new THREE.PointsMaterial({
-      color: 0x0a0a0a,
-      size: 0.14, // Match index_bc
+      size: 0.14,
       transparent: true,
       opacity: 0.9,
+      vertexColors: true, // Enable vertex colors
     });
     const dots = new THREE.Points(dotGeo, dotMat);
     mainGroup.add(dots);
@@ -71,6 +92,7 @@ const HeroSection = () => {
     // Network points
     const networkCount = 100; // Match index_bc
     const networkPos: number[] = [];
+    const networkColors: number[] = [];
 
     for (let i = 0; i < networkCount; i++) {
       const angle = Math.random() * Math.PI * 2;
@@ -82,15 +104,22 @@ const HeroSection = () => {
         height,
         Math.sin(angle) * radius
       );
+
+      // Rainbow color for network dots based on angle/height
+      const hue = (angle / (Math.PI * 2) + (height / 8)) % 1;
+      color.setHSL(hue, 0.9, 0.45); // Darker tone (lower lightness)
+      networkColors.push(color.r, color.g, color.b);
     }
 
     const networkGeo = new THREE.BufferGeometry();
     networkGeo.setAttribute('position', new THREE.Float32BufferAttribute(networkPos, 3));
+    networkGeo.setAttribute('color', new THREE.Float32BufferAttribute(networkColors, 3));
+
     const networkDotMat = new THREE.PointsMaterial({
-      color: 0x0a0a0a,
-      size: 0.08, // Match index_bc
+      size: 0.08,
       transparent: true,
       opacity: 0.74,
+      vertexColors: true,
     });
     const networkDots = new THREE.Points(networkGeo, networkDotMat);
     networkGroup.add(networkDots);
@@ -98,6 +127,7 @@ const HeroSection = () => {
     // Connection lines
     const lineGeo = new THREE.BufferGeometry();
     const linePositions: number[] = [];
+    // Reverting to single color for lines, no vertex colors needed
 
     for (let i = 0; i < networkCount; i++) {
       for (let j = i + 1; j < networkCount; j++) {
@@ -120,10 +150,11 @@ const HeroSection = () => {
     }
 
     lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+
     const lineMat = new THREE.LineBasicMaterial({
-      color: 0x0a0a0a,
+      color: 0x0a0a0a, // Dark line color
       transparent: true,
-      opacity: 0.19,
+      opacity: 0.15, // Subtle opacity
     });
     const lines = new THREE.LineSegments(lineGeo, lineMat);
     networkGroup.add(lines);
@@ -156,25 +187,23 @@ const HeroSection = () => {
       lineMat.opacity = 0.19 + Math.sin(time * 1.5) * 0.03;
 
       // Parallax scroll effect (matching index_bc logic)
-      const scrollFactor = Math.min(scrollY.current / 800, 1);
-      const ease = 1 - Math.pow(1 - scrollFactor, 3);
+      const scrollFactor = scrollY.current / 800; // Removed clamping to allow continuous movement
 
-      const startX = 5.75;
-      const endX = 2.3;
-      const startZ = -2;
-      const endZ = -1;
+      // Move down to left sideway logic
+      // Initial position: x=5.75, y=0
+      // Target movement: Left (x decrease), Down (y decrease)
+      mainGroup.position.x = 5.75 - scrollFactor * 4.0; // Move left significantly
+      mainGroup.position.y = -scrollFactor * 2.5; // Move down
 
-      mainGroup.position.x = startX + (endX - startX) * ease;
-      mainGroup.position.z = startZ + (endZ - startZ) * ease;
-      mainGroup.position.y = Math.sin(time * 0.5) * 0.1;
+      // Original Z parallax
+      mainGroup.position.z = -2 + scrollFactor * 0.5;
 
-      const startRot = -Math.PI / 4;
-      const endRot = -Math.PI / 6;
-      mainGroup.rotation.y = startRot + (endRot - startRot) * ease;
+      // Rotation
+      mainGroup.rotation.y = -Math.PI / 4 - scrollFactor * 0.5;
 
-      const startScale = 1.54;
-      const endScale = 1.21;
-      mainGroup.scale.setScalar(startScale + (endScale - startScale) * ease);
+      // Scale
+      const scale = Math.max(1.54 - scrollFactor * 0.3, 0.5);
+      mainGroup.scale.setScalar(scale);
 
       renderer.render(scene, camera);
     };
@@ -209,12 +238,13 @@ const HeroSection = () => {
     <section
       ref={containerRef}
       id="about"
-      className="relative h-screen w-full overflow-hidden bg-white"
+      className="relative h-screen w-full overflow-hidden bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: 'url(/hero-bg.png)' }}
     >
       {/* Three.js Canvas */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-0 w-full h-full pointer-events-none" // Add pointer-events-none to let clicks pass through if needed, though usually canvas handles interactions
         style={{ zIndex: 1 }}
       />
 

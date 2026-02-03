@@ -1,16 +1,6 @@
-import { useState, useEffect } from 'react';
+import { } from 'react';
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navLinks = [
     { label: 'About', href: '#about' },
@@ -22,10 +12,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-          ? 'bg-white/95 backdrop-blur-xl border-b border-black/5 py-4'
-          : 'bg-transparent py-6'
-        }`}
+      className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-black/5 py-6"
     >
       <div className="w-full px-6 lg:px-12 flex justify-between items-center">
         {/* Logo */}
