@@ -32,11 +32,11 @@ const StrategySection = () => {
 
         const renderer = new THREE.WebGLRenderer({
             canvas,
-            antialias: true,
+            antialias: true, // Re-enabled per user request
             alpha: true,
         });
         renderer.setSize(container.clientWidth, container.clientHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setPixelRatio(1); // Deep Optimization: Cap at 1x resolution
 
         const orbitGroup = new THREE.Group();
         scene.add(orbitGroup);
@@ -254,13 +254,22 @@ const StrategySection = () => {
             camera.position.y = Math.cos(time * 0.15) * 0.3;
             camera.lookAt(0, 0, 0);
 
-            renderer.render(scene, camera);
+            // Camera subtle movement
+            camera.position.x = Math.sin(time * 0.1) * 0.5;
+            camera.position.y = Math.cos(time * 0.15) * 0.3;
+            camera.lookAt(0, 0, 0);
+
+            // ONLY RENDER IF VISIBLE
+            if (isIntersecting.current) {
+                renderer.render(scene, camera);
+            }
         };
 
         // Intersection Observer
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
+                    isIntersecting.current = entry.isIntersecting;
                     if (entry.isIntersecting) {
                         targetScrollProgress.current = entry.intersectionRatio;
                     }
@@ -283,12 +292,27 @@ const StrategySection = () => {
 
         window.addEventListener('resize', handleResize);
 
+        // Visibility tracking
+        const isIntersecting = { current: true };
+
         animate();
 
         return () => {
             observer.disconnect();
             window.removeEventListener('resize', handleResize);
             cancelAnimationFrame(animationId);
+
+            // Strict Cleanup
+            scene.traverse((object) => {
+                if (object instanceof THREE.Mesh || object instanceof THREE.Points || object instanceof THREE.Line || object instanceof THREE.LineSegments) {
+                    object.geometry.dispose();
+                    if (Array.isArray(object.material)) {
+                        object.material.forEach(m => m.dispose());
+                    } else {
+                        object.material.dispose();
+                    }
+                }
+            });
             renderer.dispose();
         };
     }, []);

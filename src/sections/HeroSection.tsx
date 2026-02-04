@@ -36,11 +36,11 @@ const HeroSection = () => {
 
     const renderer = new THREE.WebGLRenderer({
       canvas,
-      antialias: true,
+      antialias: true, // Re-enabled per user request
       alpha: true,
     });
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(1); // Deep Optimization: Cap at 1x resolution
 
     const mainGroup = new THREE.Group();
     scene.add(mainGroup);
@@ -177,9 +177,14 @@ const HeroSection = () => {
     const clock = new THREE.Clock();
 
     let animationId: number;
+    const isIntersecting = { current: true }; // Ref to track visibility without re-triggering effect
 
     const animate = () => {
       animationId = requestAnimationFrame(animate);
+
+      // PAUSE RENDER LOOP IF NOT VISIBLE
+      if (!isIntersecting.current) return;
+
       const time = clock.getElapsedTime();
 
       // Smooth scroll
@@ -232,12 +237,31 @@ const HeroSection = () => {
 
     window.addEventListener('resize', handleResize);
 
+    // Performance: Intersection Observer to pause animation
+    const observer = new IntersectionObserver(([entry]) => {
+      isIntersecting.current = entry.isIntersecting;
+    }, { threshold: 0 });
+    observer.observe(container);
+
     animate();
 
     return () => {
+      observer.disconnect();
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationId);
+
+      // Strict Cleanup
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh || object instanceof THREE.Points || object instanceof THREE.Line || object instanceof THREE.LineSegments) {
+          object.geometry.dispose();
+          if (Array.isArray(object.material)) {
+            object.material.forEach(m => m.dispose());
+          } else {
+            object.material.dispose();
+          }
+        }
+      });
       renderer.dispose();
     };
   }, []);
