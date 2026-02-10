@@ -28,15 +28,11 @@ const Navbar = () => {
         <div className="w-full px-6 lg:px-12 flex justify-between items-center gap-4">
           {/* Logo */}
           <a href="#" className="flex items-center gap-3 group shrink-0">
-            <span className="w-10 h-10 relative">
-              <svg viewBox="0 0 100 100" className="w-full h-full fill-current transition-transform group-hover:rotate-12">
-                <path d="M50 10 L90 50 L50 90 L50 70 L70 50 L50 30 Z" />
-                <path d="M50 30 L30 50 L50 70 L50 30 Z" />
-              </svg>
-            </span>
-            <span className="text-2xl font-extrabold tracking-wider uppercase hidden sm:block">
-              BLCFYN
-            </span>
+            <img
+              src="/Evolytix.svg"
+              alt="Evolytix Logo"
+              className="h-8 lg:h-10 w-auto transition-transform group-hover:scale-105"
+            />
           </a>
 
           {/* Chat Search Control - Triggers Drawer */}

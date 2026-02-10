@@ -296,7 +296,7 @@ const HeroSection = () => {
             <br />Gap &amp; Connect
             <br /> The Dots.
           </h1>
-          <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-light leading-relaxed max-w-3xl">
+          <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-light leading-relaxed max-w-2xl">
             Closing the distance between your current operations and your future scale through Bespoke IT Strategy, Applied AI, and Seamless Automation
           </p>
           <ul className="flex flex-col gap-3 text-sm lg:text-base font-semibold text-gray-800 tracking-wide">
@@ -313,6 +313,32 @@ const HeroSection = () => {
               <span>CONNECTED <span className="text-gray-500 font-normal">(Digital Automation)</span></span>
             </li>
           </ul>
+
+          {/* Consultation Button */}
+          <div className="mt-8">
+            <a
+              href="https://cal.com/dixieraizpacheco/15min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button-animated relative inline-flex items-center justify-center overflow-hidden rounded-full transition-colors duration-300 whitespace-nowrap text-sm lg:text-base px-6 py-3"
+              aria-label="Let's discuss your challenge"
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                e.currentTarget.style.setProperty('--x', `${x}px`);
+                e.currentTarget.style.setProperty('--y', `${y}px`);
+              }}
+              style={{
+                backgroundColor: '#2c2cf3',
+                color: '#ffffff',
+                ['--x' as any]: '0px',
+                ['--y' as any]: '0px'
+              } as React.CSSProperties}
+            >
+              <span className="relative z-10">Let's discuss your challenge</span>
+            </a>
+          </div>
         </div>
       </div>
 

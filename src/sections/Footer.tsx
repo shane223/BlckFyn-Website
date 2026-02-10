@@ -24,15 +24,11 @@ const Footer = () => {
           {/* Logo & Description */}
           <div className="lg:col-span-1">
             <a href="#" className="flex items-center gap-3 mb-6">
-              <span className="w-10 h-10 relative">
-                <svg viewBox="0 0 100 100" className="w-full h-full fill-white">
-                  <path d="M50 10 L90 50 L50 90 L50 70 L70 50 L50 30 Z" />
-                  <path d="M50 30 L30 50 L50 70 L50 30 Z" />
-                </svg>
-              </span>
-              <span className="text-2xl font-extrabold tracking-wider uppercase">
-                BLCFYN
-              </span>
+              <img
+                src="/Evolytix.svg"
+                alt="Evolytix Logo"
+                className="h-8 w-auto brightness-0 invert"
+              />
             </a>
             <p className="text-gray-400 text-sm leading-relaxed">
               Strategic investors in financial services across Europe, combining
@@ -68,7 +64,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
           <p className="text-gray-500 text-sm">
-            &copy; {currentYear} BLCFYN Capital Partners. All rights reserved.
+            &copy; {currentYear} Evolytix. All rights reserved.
           </p>
 
           <div className="flex items-center gap-6">

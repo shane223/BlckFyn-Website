@@ -32,14 +32,14 @@ const ChatDrawer = ({ isOpen, onClose }: ChatDrawerProps) => {
     return (
         <div
             className={`
-        fixed inset-y-0 right-0 z-[60] w-full md:w-[40%] bg-white shadow-2xl transform transition-transform duration-300 ease-out
+        fixed inset-y-0 right-0 z-[60] w-full md:w-[40%] bg-[url('/hero-bg.png')] bg-cover bg-center bg-no-repeat shadow-2xl transform transition-transform duration-300 ease-out
         ${isOpen ? 'translate-x-0' : 'translate-x-full'}
       `}
         >
             <div className="h-full flex flex-col">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-gray-100">
-                    <h2 className="text-xl font-bold text-gray-900">AI Assistant</h2>
+                    <img src="/EvoAssistant.svg" alt="EvoAssistant" className="h-12" />
                     <button
                         onClick={onClose}
                         className="p-2 -mr-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors"
@@ -53,10 +53,10 @@ const ChatDrawer = ({ isOpen, onClose }: ChatDrawerProps) => {
 
                 {/* Content / Chatbot Placeholder */}
                 {/* Content / Chatbot Widget */}
-                <div className="flex-1 overflow-hidden bg-white">
+                <div className="flex-1 overflow-hidden">
                     <iframe
                         ref={iframeRef}
-                        src="http://localhost:3000/widget/yROCqK7SWqH8Vz68Fwrf-A"
+                        src="https://rag.evolytix.cc/widget/W5Tgj2b64_0_t08LWvOA2g"
                         className="w-full h-full border-none"
                         title="AI Chatbot Widget"
                     />

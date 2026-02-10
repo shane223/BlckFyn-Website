@@ -8,7 +8,11 @@ const ChartsSection = () => {
         offset: ["start end", "end start"]
     });
 
-    const y = useTransform(scrollYProgress, [0, 1], ["-9%", "9%"]);
+    const yBackground = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+    const scaleBackground = useTransform(scrollYProgress, [0, 1], [1.2, 1.1]);
+
+    const yForeground = useTransform(scrollYProgress, [0, 1], ["10%", "-10%"]);
+    const scaleForeground = useTransform(scrollYProgress, [0, 1], [1.05, 1.0]);
 
     return (
         <section ref={sectionRef} className="relative w-full min-h-screen bg-black text-white py-24 px-6 lg:px-16 overflow-hidden">
@@ -17,7 +21,8 @@ const ChartsSection = () => {
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
                     backgroundImage: "url('/charts-bg.png')",
-                    y
+                    y: yBackground,
+                    scale: scaleBackground
                 }}
             />
             <div className="relative z-10 max-w-[1920px] mx-auto px-6 lg:px-16">
@@ -31,8 +36,8 @@ const ChartsSection = () => {
                     className="max-w-4xl mb-24"
                 >
                     <p className="text-2xl lg:text-3xl font-light leading-relaxed text-gray-300">
-                        We leverage cutting-edge methodologies and technologies, emphasizing creativity and innovation.
-                        As a strategic partner, we embrace new challenges and deliver exceptional results in complex scenarios.
+                        We translate technical complexity into operational simplicity by engineering measurable outcomes rather than just implementing tools.
+                        We transform daily friction into a powerful growth engine that redefines your business trajectory.
                     </p>
                 </motion.div>
 
@@ -45,42 +50,56 @@ const ChartsSection = () => {
                     className="max-w-4xl mb-16"
                 >
                     <blockquote className="text-xl lg:text-2xl leading-relaxed text-gray-400">
-                        "We serve both major corporations and local businesses. Above all, we simply love what we do and value our partnership."
+                        "Whether you are refining an existing setup or building for future scale, we partner with you to turn your fragmented digital infrastructure into your business's greatest competitive asset."
                     </blockquote>
                 </motion.div>
 
-                {/* Grid - 3 bars with 10% bottom padding */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8 h-auto lg:h-[800px] pb-[10%]">
+                {/* Grid - 4 bars, 4 columns even on mobile - Wrapped in parallax motion */}
+                <motion.div
+                    style={{ y: yForeground, scale: scaleForeground }}
+                    className="grid grid-cols-4 gap-2 lg:gap-8 h-auto lg:h-[800px] pb-[5%]"
+                >
 
                     {/* Bar 1 */}
                     <ChartBar
-                        delay={0.2}
-                        height="30%"
-                        value="+ 101%"
-                        title="Every Project Starts With an Idea"
-                        label="WE REALIZE EVERY IDEA — EVEN THE WILDEST ONES"
+                        delay={1}
+                        height="45%"
+                        value="+ 45%"
+                        title="COST OPTIMIZATION"
+                        label="Precision scaling with zero operational waste"
                     />
 
                     {/* Bar 2 */}
                     <ChartBar
-                        delay={0.3}
-                        height="76%"
-                        value="+ 246%"
-                        title="Client Satisfaction"
-                        label="OUR PORTFOLIO SPANS COMPLETELY DIFFERENT INDUSTRIES"
+                        delay={2}
+                        height="62%"
+                        value="+ 68%"
+                        title="REVENUE INCREASE"
+                        label="Turning every connected dot into a profit centre"
                     />
 
                     {/* Bar 3 */}
                     <ChartBar
-                        delay={0.4}
-                        height="100%"
-                        value="+ 312%"
-                        title="Tech Meets Aesthetics"
-                        label="WE SUPPORT PUBLIC COMPANIES AND LOCAL BUSINESSES ALIKE"
+                        delay={3}
+                        height="75%"
+                        value="+ 85%"
+                        title="CLIENT SATISFACTION"
+                        label="Frictionless experiences that drive lifelong loyalty"
                     />
 
-                </div>
+                    {/* Bar 4 - Tallest */}
+                    <ChartBar
+                        delay={4}
+                        height="100%"
+                        value="+ 125%"
+                        title="OPERATIONAL VELOCITY"
+                        label="Stop managing chaos and start leading growth"
+                    />
+
+                </motion.div>
             </div>
+            {/* Bottom Fade - Ensures clean transition to next section */}
+            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none" />
         </section>
     );
 };
@@ -105,9 +124,9 @@ const ChartBar = ({
         const updateFontSize = () => {
             if (contentRef.current) {
                 const contentWidth = contentRef.current.offsetWidth;
-                // Font size relative to content box width
-                const calculatedSize = contentWidth * 0.15;
-                const clampedSize = Math.max(16, Math.min(48, calculatedSize));
+                // Font size relative to content box width - smaller for mobile
+                const calculatedSize = contentWidth * 0.12;
+                const clampedSize = Math.max(10, Math.min(40, calculatedSize)); // Slightly smaller min for mobile
                 setFontSize(`${clampedSize}px`);
             }
         };
@@ -123,52 +142,52 @@ const ChartBar = ({
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true }}
-            className="flex flex-col h-full justify-end group mt-16 lg:mt-0"
+            className="flex flex-col h-full justify-end group mt-8 lg:mt-0"
         >
             {/* Value Label */}
-            <div className="text-sm font-bold text-gray-400 mb-4 transition-colors group-hover:text-white">
+            <div className="text-xs lg:text-sm font-bold mb-2 lg:mb-4 transition-colors text-white lg:text-gray-400 lg:group-hover:text-white">
                 {value}
             </div>
 
             {/* Bar Body */}
             <div
-                className="relative w-full bg-[#111] overflow-hidden transition-all duration-700 ease-out group-hover:bg-[#1a1a1a]"
+                className="relative w-full overflow-hidden transition-all duration-700 ease-out bg-[#1a1a1a] lg:bg-[#111] lg:group-hover:bg-[#1a1a1a]"
                 style={{ height }}
             >
-                {/* Background Image (Reveals/Zooms on Hover) */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-700">
+                {/* Background Image - Visible on mobile, hover on desktop */}
+                <div className="absolute inset-0 transition-opacity duration-700 opacity-40 lg:opacity-0 lg:group-hover:opacity-40">
                     <img
-                        src="https://websitestyle.ai/wp-content/uploads/2025/08/tlo-wykresu.jpg"
+                        src="/bar-bg.jpg"
                         alt="Background"
-                        className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000 ease-out"
+                        className="w-full h-full object-cover transition-transform duration-1000 ease-out scale-100 lg:scale-110 lg:group-hover:scale-100"
                     />
                 </div>
 
                 {/* Content Container - 90% width for text sizing */}
-                <div className="absolute inset-0 flex items-center justify-center p-4 z-10">
+                <div className="absolute inset-0 flex items-center justify-center p-2 lg:p-4 z-10">
                     <div
                         ref={contentRef}
                         className="w-[90%] h-[90%] flex flex-col justify-between"
                     >
                         {/* Top Content */}
-                        <div className="transform translate-y-0 lg:translate-y-4 lg:group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                        <div className="transform transition-transform duration-500 ease-out translate-y-0 lg:translate-y-4 lg:group-hover:translate-y-0">
                             <h3
-                                className="font-bold uppercase leading-tight mb-4"
+                                className="font-bold uppercase leading-tight mb-2 lg:mb-4"
                                 style={{ fontSize }}
                             >
                                 {title}
                             </h3>
 
-                            {/* CTA (Fades in on hover) */}
-                            <div className="opacity-0 lg:group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                <button className="text-xs lg:text-sm font-bold uppercase tracking-widest border-b border-white pb-1 hover:text-gray-300 hover:border-gray-300 transition-colors">
+                            {/* CTA - Visible on mobile, hover on desktop */}
+                            <div className="transition-opacity duration-500 delay-100 opacity-100 lg:opacity-0 lg:group-hover:opacity-100">
+                                <button className="text-[8px] lg:text-sm font-bold uppercase tracking-widest border-b border-white pb-1 hover:text-gray-300 hover:border-gray-300 transition-colors">
                                     Learn More
                                 </button>
                             </div>
                         </div>
 
                         {/* Bottom Label */}
-                        <div className="text-xs lg:text-sm text-gray-500 uppercase tracking-wide leading-relaxed lg:opacity-50 lg:group-hover:opacity-100 transition-opacity duration-500">
+                        <div className="text-[8px] lg:text-sm text-gray-500 uppercase tracking-wide leading-relaxed transition-opacity duration-500 opacity-100 lg:opacity-50 lg:group-hover:opacity-100">
                             {label}
                         </div>
                     </div>

@@ -31,9 +31,11 @@
   * {
     @apply border-border;
   }
+
   html {
     scroll-behavior: smooth;
   }
+
   body {
     @apply bg-white text-foreground antialiased;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -87,26 +89,26 @@
 
 /* Typography */
 .heading-xl {
-  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-size: clamp(2.8rem, 7vw, 5.6rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.heading-lg {
+  font-size: clamp(2.1rem, 5.6vw, 4.2rem);
   font-weight: 800;
   line-height: 1.0;
   letter-spacing: -0.03em;
   text-transform: uppercase;
 }
 
-.heading-lg {
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-}
-
 .heading-md {
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.4rem, 4.2vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
 }
 
@@ -116,15 +118,58 @@
   color: #555;
 }
 
+/* Animated Button Spotlight Effect */
+.button-animated {
+  position: relative;
+  overflow: hidden;
+}
+
+.button-animated::after {
+  content: '';
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background-color: #10b981;
+  transition: width 0.8s, height 0.8s;
+  z-index: 0;
+}
+
+.button-animated:hover::after {
+  width: 60vw;
+  height: 60vw;
+}
+
+.button-animated:hover {
+  color: #171b27;
+}
+
 /* Animation utilities */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes pulse-slow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
+
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
 }
 
 .animate-float {
