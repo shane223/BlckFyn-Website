@@ -9,6 +9,7 @@ const ChartsSection = lazy(() => import('./sections/ChartsSection'));
 const WhyItWorksSection = lazy(() => import('./sections/WhyItWorksSection'));
 const HighlightSection = lazy(() => import('./sections/HighlightSection'));
 const TestimonialsSection = lazy(() => import('./sections/TestimonialsSection'));
+const FAQsSection = lazy(() => import('./sections/FAQsSection'));
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <ChartsSection />
           <WhyItWorksSection />
           <TestimonialsSection />
+          <FAQsSection />
           <StrategySection />
           <HighlightSection />
         </Suspense>

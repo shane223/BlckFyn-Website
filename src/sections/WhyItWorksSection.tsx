@@ -268,8 +268,8 @@ const ContentBlock = ({ item, index }: { item: any, index: number }) => {
                     className="w-full h-full object-cover"
                     poster={item.poster}
                 >
-                    <source src={item.videoMp4} type="video/mp4" />
-                    <source src={item.videoWebm} type="video/webm" />
+                    {item.videoMp4 && <source src={item.videoMp4} type="video/mp4" />}
+                    {item.videoWebm && <source src={item.videoWebm} type="video/webm" />}
                 </video>
             </div>
 
@@ -296,30 +296,30 @@ const contentItems = [
     {
         title: "Strategic Consultation",
         description: <span><strong className="text-black">The Blueprint:</strong> We audit your current operations to identify exactly where your "dots" are disconnected. We provide a professional IT and AI roadmap that serves as a bridge between your current manual processes and your future growth goals, ensuring every piece of technology you use is a direct investment in your bottom line.</span>,
-        videoMp4: "https://cdn.prod.website-files.com/63f9f100025c058594957cca%2F6871acefa162f4b7055b7e9c_Humanize-min20-transcode.mp4",
-        videoWebm: "https://cdn.prod.website-files.com/63f9f100025c058594957cca%2F6871acefa162f4b7055b7e9c_Humanize-min20-transcode.webm",
-        poster: "https://cdn.prod.website-files.com/63f9f100025c058594957cca%2F6871acefa162f4b7055b7e9c_Humanize-min20-poster-00001.jpg"
+        videoMp4: "/Strategic_Consultation.mp4",
+        videoWebm: "",
+        poster: ""
     },
     {
         title: "Custom Business Systems",
         description: <span><strong className="text-black">The Foundation:</strong> We build and integrate the central systems your business lives on. Whether you need a high-performing Website, an E-commerce platform, a CRM, or dedicated Financial, HR, and Inventory Management systems, we develop unified tools tailored to your specific workflow. In the AI Age, we create custom Agentic Applications that are smarter and more affordable than traditional off-the-shelf software.</span>,
-        videoMp4: "https://cdn.prod.website-files.com/63f9f100025c058594957cca%2F6871ad06931dd8bd17abb0d8_BoostRecall-min20-transcode.mp4",
-        videoWebm: "https://cdn.prod.website-files.com/63f9f100025c058594957cca%2F6871ad06931dd8bd17abb0d8_BoostRecall-min20-transcode.webm",
-        poster: "https://cdn.prod.website-files.com/63f9f100025c058594957cca%2F6871ad06931dd8bd17abb0d8_BoostRecall-min20-poster-00001.jpg"
+        videoMp4: "/Custom_Business_Systems.mp4",
+        videoWebm: "",
+        poster: ""
     },
     {
         title: "Intelligent Automation",
         description: <span><strong className="text-black">The Connection:</strong> We bridge the gaps between your existing software by using intelligent automation to make your apps finally talk to each other. By linking your data and automating repetitive manual entry, we create a more efficient operation where information flows smoothly between departments. This removes the "manual grind," allowing your team to focus on high-priority tasks rather than moving data between spreadsheets.</span>,
-        videoMp4: "https://cdn.prod.website-files.com/63f9f100025c058594957cca%2F6871ae5392343b26587fb871_SayMore-min20-transcode.mp4",
-        videoWebm: "https://cdn.prod.website-files.com/63f9f100025c058594957cca%2F6871ae5392343b26587fb871_SayMore-min20-transcode.webm",
-        poster: "https://cdn.prod.website-files.com/63f9f100025c058594957cca%2F6871ae5392343b26587fb871_SayMore-min20-poster-00001.jpg"
+        videoMp4: "/Intelligent_Automation.mp4",
+        videoWebm: "",
+        poster: ""
     },
     {
         title: "Digital Growth Engines",
         description: <span><strong className="text-black">The Visibility:</strong> We connect your brand to your target market. By combining AI-driven SEO with intelligent lead-generation systems, we ensure your business is the first one customers find. We turn your technical infrastructure into a reliable engine that consistently captures digital interest and converts it into measurable revenue growth.</span>,
-        videoMp4: "https://cdn.prod.website-files.com/63f9f100025c058594957cca%2F6871ad28156c4722bf866c69_Unlimited-min20-transcode.mp4",
-        videoWebm: "https://cdn.prod.website-files.com/63f9f100025c058594957cca%2F6871ad28156c4722bf866c69_Unlimited-min20-transcode.webm",
-        poster: "https://cdn.prod.website-files.com/63f9f100025c058594957cca%2F6871ad28156c4722bf866c69_Unlimited-min20-poster-00001.jpg"
+        videoMp4: "/Digital Growth Engines.mp4",
+        videoWebm: "",
+        poster: ""
     }
 ];
 

@@ -7,7 +7,7 @@ const StrategySection = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start end", "end start"]
+        offset: ["start 75%", "start 100px"]
     });
     const scrollProgress = useRef(0);
     const targetScrollProgress = useRef(0);
@@ -327,7 +327,7 @@ const StrategySection = () => {
                         key={i}
                         heightPct={h}
                         scrollProgress={scrollYProgress}
-                        speed={0.3 + (i * 0.05)}
+                        speed={1}
                     />
                 ))}
             </div>
@@ -340,7 +340,7 @@ const StrategySection = () => {
             />
 
             {/* Content Overlay */}
-            <div className="relative z-10 min-h-screen flex items-center px-6 lg:px-16 py-24">
+            <div className="relative z-10 min-h-screen flex items-center px-6 lg:px-16 py-12">
                 <div className="w-full max-w-7xl mx-auto">
                     <div className="grid lg:grid-cols-2 gap-16 items-start">
 
