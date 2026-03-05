@@ -215,7 +215,7 @@ const WhyItWorksSection = () => {
                         >
                             <span className="flex overflow-hidden">
                                 {['W', 'H', 'A', 'T', ' ', 'W', 'E'].map((char, i) => (
-                                    <motion.span key={i} variants={letterVariant} className="text-gray-800 inline-block">{char === ' ' ? '\u00A0' : char}</motion.span>
+                                    <motion.span key={i} variants={letterVariant} className="text-black inline-block">{char === ' ' ? '\u00A0' : char}</motion.span>
                                 ))}
                             </span>
                             <span className="flex overflow-hidden">
@@ -248,8 +248,7 @@ const WhyItWorksSection = () => {
                 ))}
             </div>
 
-            {/* Bottom Fade - Ensures clean transition to next section */}
-            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent z-20 pointer-events-none" />
+
         </section >
     );
 };
@@ -258,8 +257,24 @@ const ContentBlock = ({ item, index }: { item: any, index: number }) => {
     return (
         <div className="flex flex-col min-h-[80vh] lg:min-h-screen py-12 lg:py-16 group">
 
+            {/* Content Above Video */}
+            <div className="mb-8 lg:mb-12">
+                {/* Number Badge */}
+                <div className="text-6xl lg:text-8xl font-bold mb-6 tracking-tighter" style={{ background: 'linear-gradient(to right, #5fbb46, #059fab)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>0{index + 1}</div>
+
+                {/* Title */}
+                <h3 className="text-3xl lg:text-5xl font-bold mb-6 leading-tight uppercase text-black">
+                    {item.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-gray-600 text-base lg:text-lg leading-relaxed">
+                    {item.description}
+                </p>
+            </div>
+
             {/* Video Background Block */}
-            <div className="relative w-full h-[50vh] lg:h-[60vh] overflow-hidden mb-8 lg:mb-12">
+            <div className="relative w-full h-[50vh] lg:h-[60vh] overflow-hidden">
                 <video
                     autoPlay
                     loop
@@ -272,51 +287,35 @@ const ContentBlock = ({ item, index }: { item: any, index: number }) => {
                     {item.videoWebm && <source src={item.videoWebm} type="video/webm" />}
                 </video>
             </div>
-
-            {/* Content Below Video */}
-            <div>
-                {/* Number Badge */}
-                <div className="text-5xl font-bold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent mb-6">0{index + 1}</div>
-
-                {/* Title */}
-                <h3 className="text-3xl lg:text-5xl font-bold mb-6 leading-tight uppercase text-black">
-                    {item.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-gray-600 text-base lg:text-lg leading-relaxed max-w-2xl">
-                    {item.description}
-                </p>
-            </div>
         </div>
     );
 };
 
 const contentItems = [
     {
-        title: "Strategic Consultation",
-        description: <span><strong className="text-black">The Blueprint:</strong> We audit your current operations to identify exactly where your "dots" are disconnected. We provide a professional IT and AI roadmap that serves as a bridge between your current manual processes and your future growth goals, ensuring every piece of technology you use is a direct investment in your bottom line.</span>,
+        title: "Strategic Transformation",
+        description: <span><strong className="text-black">The Blueprint:</strong> We perform a deep-dive <strong className="text-black">Discovery</strong> of your current operations to identify exactly where your "dots" are disconnected. We design a professional <strong className="text-black">AI Roadmap</strong> that serves as a strategic bridge between your manual processes and your future scale, ensuring every piece of technology you use is a direct investment in your bottom line.</span>,
         videoMp4: "/Strategic_Consultation.mp4",
         videoWebm: "",
         poster: ""
     },
     {
-        title: "Custom Business Systems",
-        description: <span><strong className="text-black">The Foundation:</strong> We build and integrate the central systems your business lives on. Whether you need a high-performing Website, an E-commerce platform, a CRM, or dedicated Financial, HR, and Inventory Management systems, we develop unified tools tailored to your specific workflow. In the AI Age, we create custom Agentic Applications that are smarter and more affordable than traditional off-the-shelf software.</span>,
+        title: "Agentic Systems Engineering",
+        description: <span><strong className="text-black">The Foundation:</strong> We build and integrate the central <strong className="text-black">AI Core</strong> your business lives on. By unifying your fragmented operational "islands" into bespoke <strong className="text-black">Agentic Applications</strong>, we develop production-grade systems tailored specifically to your unique workflow. These enterprise-grade solutions integrate directly into your stack to <strong className="text-black">delete manual work</strong> and empower your team to handle <strong className="text-black">10x the volume</strong>, offering a smarter and more affordable alternative to traditional off-the-shelf software.</span>,
         videoMp4: "/Custom_Business_Systems.mp4",
         videoWebm: "",
         poster: ""
     },
     {
-        title: "Intelligent Automation",
-        description: <span><strong className="text-black">The Connection:</strong> We bridge the gaps between your existing software by using intelligent automation to make your apps finally talk to each other. By linking your data and automating repetitive manual entry, we create a more efficient operation where information flows smoothly between departments. This removes the "manual grind," allowing your team to focus on high-priority tasks rather than moving data between spreadsheets.</span>,
+        title: "Seamless Digital Automation",
+        description: <span><strong className="text-black">The Connectivity:</strong> We delete the "manual grind" by engineering tailored backend workflows and intelligent <strong className="text-black">AI Agents</strong>—such as Voice and Chat agents—that integrate directly into your existing stack. We turn your isolated "data islands" into a unified engine, empowering your existing team to handle <strong className="text-black">10x the volume</strong> with zero operational waste.</span>,
         videoMp4: "/Intelligent_Automation.mp4",
         videoWebm: "",
         poster: ""
     },
     {
-        title: "Digital Growth Engines",
-        description: <span><strong className="text-black">The Visibility:</strong> We connect your brand to your target market. By combining AI-driven SEO with intelligent lead-generation systems, we ensure your business is the first one customers find. We turn your technical infrastructure into a reliable engine that consistently captures digital interest and converts it into measurable revenue growth.</span>,
+        title: "Performance Growth Engines",
+        description: <span><strong className="text-black">The Visibility:</strong> We connect your brand to your target market through a full-spectrum <strong className="text-black">AI-driven marketing ecosystem</strong>. Once your <strong className="text-black">AI Core</strong> is established, we transform your technical infrastructure into a high-velocity engine that automates everything from <strong className="text-black">AI-guided content and image generation</strong> to <strong className="text-black">intelligent competitor analysis and remarketing</strong>. By leveraging <strong className="text-black">agentic systems</strong> to dominate your digital landscape, we ensure your business is not just found first, but consistently converts digital interest into <strong className="text-black">measurable revenue growth</strong>.</span>,
         videoMp4: "/Digital Growth Engines.mp4",
         videoWebm: "",
         poster: ""

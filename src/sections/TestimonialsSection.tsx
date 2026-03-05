@@ -93,14 +93,14 @@ const INDUSTRIES = [
         id: "wellness",
         number: "01",
         title: "Wellness & Personal Care",
-        subtitle: "Beauty, Healthcare, Fitness, Pets, Cllinics",
+        subtitle: "Frictionless Booking & Lifelong Loyalty",
         metrics: [
             { value: "50%", label: "Less No-Shows" },
             { value: "20%", label: "More Repeats" },
             { value: "3x", label: "Appt Velocity" },
         ],
         systems: "AI Booking Agents, Integrated CRMs, Auto-Reminders",
-        insight: "Wellness businesses bridge the distance between personal care and operational efficiency by connecting automated scheduling dots that eliminate manual booking friction.",
+        insight: "Wellness businesses bridge the distance between personal care and operational efficiency by deploying human-like AI Voice Agents that handle inbound calls 24/7, eliminating manual booking friction and no-show risks.",
         gradient: "from-orange-400 to-amber-500",
         accentColor: "#f97316", // orange-500
     },
@@ -108,14 +108,14 @@ const INDUSTRIES = [
         id: "retail",
         number: "02",
         title: "Food, Retail & Leisure",
-        subtitle: "Dining, Grocery, Entertainment, Travel",
+        subtitle: "Unified Operations & Profit Center Growth",
         metrics: [
             { value: "40%", label: "Online Rev" },
             { value: "22%", label: "AOV Growth" },
             { value: "5x", label: "Sales Conv" },
         ],
-        systems: "POS Systems, E-commerce Sync, Loyalty Marketing",
-        insight: "Retail and dining sectors transform the 'manual grind' into a seamless experience by bridging the gap between front-of-house service and back-of-house inventory data.",
+        systems: "Dining/Retail Mgmt, Custom Backend Automations, Inventory Apps",
+        insight: "Retail and dining sectors transform the 'manual grind' into a seamless experience by bridging the gap between front-of-house service and Custom AI Automations that manage back-of-house inventory and customer loyalty data in real-time.",
         gradient: "from-green-400 to-teal-500",
         accentColor: "#0d9488", // teal-600
     },
@@ -123,14 +123,14 @@ const INDUSTRIES = [
         id: "professional",
         number: "03",
         title: "Professional & Education",
-        subtitle: "Finance & Investment, Law, Accounting, Education",
+        subtitle: "Automated Intelligence & Knowledge Scaling",
         metrics: [
             { value: "35%", label: "Time Saved" },
             { value: "5x", label: "Faster Onboard" },
             { value: "42%", label: "Doc Speed" },
         ],
-        systems: "Custom CRMs, Doc Automation, Secure Portals",
-        insight: "Professional and educational firms achieve higher performance gains by replacing manual paperwork with integrated digital blueprints that streamline the entire client journey.",
+        systems: "Content Automation, Secure Portals, Custom CRMs",
+        insight: "Professional and educational firms achieve higher performance gains by implementing Content Automation systems that scrape data and auto-generate reports, articles, and summaries, replacing weeks of manual paperwork with instant digital blueprints.",
         gradient: "from-blue-400 to-indigo-500",
         accentColor: "#3b82f6", // blue-500
     },
@@ -138,14 +138,14 @@ const INDUSTRIES = [
         id: "home",
         number: "04",
         title: "Home & Trade Services",
-        subtitle: "Construction, Renovation, Plumbing, Cleaning",
+        subtitle: "Precision Scaling & Automated Job-Flow",
         metrics: [
             { value: "35%", label: "Faster Pay" },
             { value: "20%", label: "More Jobs" },
             { value: "100%", label: "Accuracy" },
         ],
-        systems: "Field Service Mgmt, Auto-Invoicing, Job Tracking",
-        insight: "Construction and trade businesses reach future scale by replacing paper-based bottlenecks with integrated mobile systems that track every job from quote to completion.",
+        systems: "Field Service Mgmt, Intelligent Booking Bots, Job Tracking",
+        insight: "Construction and trade businesses reach future scale by replacing paper-based bottlenecks with Intelligent Chat Agents on WhatsApp and web that qualify leads and book jobs automatically from quote to completion.",
         gradient: "from-pink-400 to-rose-600",
         accentColor: "#db2777", // pink-600
     },
@@ -267,10 +267,10 @@ const TestimonialsSection = () => {
             <div ref={containerRef} className="container mx-auto px-4 xs:px-8 pt-40 pb-0 grid gap-24 relative z-10">
                 <div className="w-[min(64rem,100%)] flex flex-col gap-6 relative z-20">
                     <h2 className="text-5xl md:text-7xl font-bold tracking-tight uppercase leading-[0.9]">
-                        Industry Impact
+                        How Your Sector Wins
                     </h2>
                     <p className="text-xl md:text-2xl font-light text-neutral-600 leading-relaxed max-w-3xl">
-                        While every business is unique, the 'gap' is often the same. We connect the dots for these key industries to turn operational friction into a professional competitive edge.
+                        We delete your manual grind so you can handle <strong className="font-semibold text-neutral-800">10x the volume</strong>. Once your <strong className="font-semibold text-neutral-800">AI Core</strong> is deployed, your technical friction becomes your greatest competitive asset.
                     </p>
                 </div>
 

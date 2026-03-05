@@ -59,32 +59,34 @@ const ChartsSection = () => {
                     style={{ y: yForeground, scale: scaleForeground }}
                     className="grid grid-cols-4 gap-2 lg:gap-8 h-auto lg:h-[800px] pb-[5%]"
                 >
-
                     {/* Bar 1 */}
                     <ChartBar
                         delay={1}
                         height="45%"
                         value="+ 45%"
                         title="COST OPTIMIZATION"
-                        label="Precision scaling with zero operational waste"
+                        label="Precision scaling with zero operational waste."
+                        how='We audit your current landscape to identify "disconnected dots," ensuring every piece of technology is a direct investment in your bottom line rather than a recurring expense.'
                     />
 
                     {/* Bar 2 */}
                     <ChartBar
                         delay={2}
                         height="62%"
-                        value="+ 68%"
-                        title="REVENUE INCREASE"
-                        label="Turning every connected dot into a profit centre"
+                        value="10x"
+                        title="OPERATIONAL CAPACITY"
+                        label="Delete manual work and handle 10x the volume."
+                        how="By deploying an AI Core and custom agentic systems, we empower your existing team to handle ten times their current workload without increasing overhead."
                     />
 
                     {/* Bar 3 */}
                     <ChartBar
                         delay={3}
-                        height="75%"
+                        height="85%"
                         value="+ 85%"
-                        title="CLIENT SATISFACTION"
-                        label="Frictionless experiences that drive lifelong loyalty"
+                        title="TEAM PRODUCTIVITY"
+                        label="Reclaim 30+ hours per week of your team's time."
+                        how='We engineer custom backend automations and RAG pipelines that take over the "manual grind," allowing your staff to focus on high-value strategy and growth.'
                     />
 
                     {/* Bar 4 - Tallest */}
@@ -92,8 +94,9 @@ const ChartsSection = () => {
                         delay={4}
                         height="100%"
                         value="+ 125%"
-                        title="OPERATIONAL VELOCITY"
-                        label="Stop managing chaos and start leading growth"
+                        title="REVENUE VELOCITY"
+                        label="Turn digital interest into measurable revenue automatically."
+                        how="We implement intelligent Voice and Chat Agents that qualify leads 24/7, ensuring your business is the first one customers find and the fastest to respond."
                     />
 
                 </motion.div>
@@ -109,13 +112,15 @@ const ChartBar = ({
     height,
     value,
     title,
-    label
+    label,
+    how
 }: {
     delay: number;
     height: string;
     value: string;
     title: string;
     label: string;
+    how: string;
 }) => {
     const contentRef = useRef<HTMLDivElement>(null);
     const [fontSize, setFontSize] = useState('2rem');
@@ -163,14 +168,17 @@ const ChartBar = ({
                     />
                 </div>
 
+                {/* Bottom Fade for Text Legibility */}
+                <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none transition-opacity duration-700 opacity-100 lg:opacity-0 lg:group-hover:opacity-100" />
+
                 {/* Content Container - 90% width for text sizing */}
-                <div className="absolute inset-0 flex items-center justify-center p-2 lg:p-4 z-10">
+                <div className="absolute inset-0 flex items-center justify-center p-2 lg:p-4 z-20">
                     <div
                         ref={contentRef}
                         className="w-[90%] h-[90%] flex flex-col justify-between"
                     >
                         {/* Top Content */}
-                        <div className="transform transition-transform duration-500 ease-out translate-y-0 lg:translate-y-4 lg:group-hover:translate-y-0">
+                        <div className="transform transition-transform duration-500 ease-out translate-y-0 lg:translate-y-4 lg:group-hover:translate-y-0 text-left">
                             <h3
                                 className="font-bold uppercase leading-tight mb-2 lg:mb-4"
                                 style={{ fontSize }}
@@ -178,16 +186,16 @@ const ChartBar = ({
                                 {title}
                             </h3>
 
-                            {/* CTA - Visible on mobile, hover on desktop */}
-                            <div className="transition-opacity duration-500 delay-100 opacity-100 lg:opacity-0 lg:group-hover:opacity-100">
-                                <button className="text-[8px] lg:text-sm font-bold uppercase tracking-widest border-b border-white pb-1 hover:text-gray-300 hover:border-gray-300 transition-colors">
-                                    Learn More
-                                </button>
+                            {/* Additional Info - Visible on hover */}
+                            <div className="transition-opacity duration-500 delay-100 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 flex flex-col space-y-4">
+                                <p className="text-[10px] sm:text-xs lg:text-sm text-gray-300 leading-normal hidden lg:block">
+                                    {how}
+                                </p>
                             </div>
                         </div>
 
                         {/* Bottom Label */}
-                        <div className="text-[8px] lg:text-sm text-gray-500 uppercase tracking-wide leading-relaxed transition-opacity duration-500 opacity-100 lg:opacity-50 lg:group-hover:opacity-100">
+                        <div className="text-[8px] lg:text-xs xl:text-sm text-gray-300 uppercase tracking-wide leading-relaxed transition-opacity duration-500 opacity-100 lg:opacity-50 lg:group-hover:opacity-100 font-medium z-30">
                             {label}
                         </div>
                     </div>

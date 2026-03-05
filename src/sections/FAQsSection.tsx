@@ -6,63 +6,63 @@ import ParticleBackground from '../components/ui/particle-background';
 const FAQ_DATA = [
     {
         question: "What exactly does \"Connecting the Dots\" mean for my company?",
-        answer: "Most businesses have essential tools, but they often function as \"islands\" that don't communicate. We bridge the gap by creating a Bespoke IT Strategy that links your current systems—such as your financial tools, customer databases, and operational apps—into one unified engine. This eliminates the manual grind of moving data by hand and allows your business to function with operational excellence."
+        answer: "Most businesses have essential tools that function as \"islands\" that don't communicate. We bridge this gap by designing and deploying an AI Core that links these islands—such as your financial tools, CRM, and inventory—into one unified system. This deletes manual work, speeds up operations, and allows your existing team to handle 10x the volume."
     },
     {
-        question: "I already have my current systems and applications such as my financial software and CRM. Do I need to start over?",
-        answer: "Not at all. Our goal is to build a bridge, not a barrier. We perform a Strategic Consultation to audit what you are currently using. We then build the custom connections needed so your existing applications finally work together, ensuring your previous technology purchases become a direct investment in your future growth."
+        question: "I already have my current systems and applications. Do I need to start over?",
+        answer: "No. We specialise in building production-grade AI systems—including voice agents and automations—that integrate directly into your existing stack. We turn your current fragmented infrastructure into a powerful growth engine without forcing you to rebuild from scratch."
     },
     {
         question: "How is a \"Bespoke\" system different from just buying a standard software subscription?",
-        answer: "Standard software is built for the mass market, which often means it won't fit your unique workflow perfectly. A bespoke system is tailored specifically to your needs. We provide Enterprise-grade features—the high-level power usually reserved for large corporations—but scaled and designed specifically for a growing SME."
+        answer: "Standard subscriptions are generic tools that often create more \"disconnected dots\". A bespoke system is a custom-engineered AI Infrastructure built specifically for your unique workflow. It offers enterprise-grade strategy and integration that standard off-the-shelf software cannot match."
     },
     {
-        question: "Is a bespoke system more expensive than an off-the-shelf one?",
-        answer: "While the initial setup is a specialized investment, it is far more accessible than a massive corporate enterprise system. Because it is built specifically for you, you avoid paying for unnecessary features and the hidden costs of trying to \"force\" a generic tool to work for your unique business."
+        question: "Is a bespoke AI system more expensive than an off-the-shelf one?",
+        answer: "Initially, bespoke engineering is a more focused investment, but it is often more affordable than traditional software in the long run. Off-the-shelf tools often come with \"hidden\" costs—like the time your team wastes trying to force them to talk to each other. We build a unified foundation that eliminates those inefficiencies from day one."
     },
     {
         question: "What are these \"Agentic Applications\" and how do they benefit me?",
-        answer: "In the AI Age, we can build custom \"agents\" that act as intelligent digital team members. They don't just store data; they act on it—handling tasks like triaging leads or managing inventory forecasts. These are smarter and more effective than traditional software, providing you with specialized value creation."
+        answer: "These are intelligent systems designed to perform tasks autonomously. Examples include Voice Agents that handle inbound calls 24/7 like a human receptionist, or Content Automation systems that auto-generate social posts and summaries. They benefit you by handling high-volume tasks with zero human intervention."
     },
     {
-        question: "Are there ongoing costs after the system is built?",
-        answer: "Yes. While you own the system, some of our Agentic Applications require ongoing AI processing power to remain effective. Just like a utility, there is a monthly usage fee to cover the AI processing of your data, ensuring your automation remains sharp and responsive 24/7."
+        question: "Are there ongoing costs after the AI system is built?",
+        answer: "Our process includes an \"Evolve\" phase. While your core infrastructure is built to last, we monitor and optimize your AI as your business grows. This ensures your system stays \"smart\" and continues to handle your increasing operational volume without requiring a total rebuild."
     },
     {
         question: "Is my business too small for these \"Enterprise\" features?",
-        answer: "If you are struggling with manual data entry, repetitive tasks, or disconnected information, you are the perfect size. Our mission is to make high-end, strategic technology and innovation excellence accessible to SMEs so they can compete at a higher level without needing a corporate-sized budget."
+        answer: "No business is too small for efficiency. We bring production-grade AI systems—once only available to corporations—directly to the SME market. This gives you a massive competitive advantage, allowing you to handle 10x the volume of competitors who are still stuck in the \"manual grind\"."
     },
     {
         question: "How much of my team's manual work can we actually eliminate?",
-        answer: "By \"Connecting the Dots,\" we target the repetitive bottlenecks that slow your team down. While we focus on seamless automation, our goal is to handle the heavy lifting so your staff can focus on high-value tasks that actually drive growth and client satisfaction."
+        answer: "Our focus is on measurable impact, with clients reclaiming an average of 30+ hours per week. By automating tailored backend workflows and data-syncing between your \"islands,\" we eliminate the repetitive \"manual grind\" that currently slows your trajectory."
     },
     {
         question: "Why is a \"Strategic Consultation\" necessary before we start?",
-        answer: "We believe in having a clear Blueprint before any work begins. This initial audit allows us to see exactly where your operations are disconnected. It provides the IT and AI roadmap that ensures every cent you spend is tied to a specific goal for your bottom line."
+        answer: "This is our Discovery phase where we uncover opportunities and align goals to build the right AI roadmap. We audit your current landscape to ensure every piece of technology we deploy is a direct investment in your bottom line, rather than just another operational expense."
     },
     {
         question: "How long does it take from the first audit to a finished bridge?",
-        answer: "We move with a focus on operational velocity. While every bespoke project is different, most initial bridges and integrations are operational within 4 to 8 weeks, allowing you to see the professional difference in your daily workflow as quickly as possible."
+        answer: "While full-scale AI transformations can vary, we pride ourselves on speed. For example, some specialized content automation systems can be delivered and integrated in as little as two weeks, providing a huge operational impact in a short timeframe."
     },
     {
         question: "Do I need to be a technical expert to manage these new tools?",
-        answer: "Absolutely not. You are an expert in running your business, and our goal is to keep it that way. We handle the hands-on operational complexities behind the scenes so you don't have to. Your daily interface is designed for operational simplicity—clean, professional, and intuitive—allowing you to focus on leading your growth while the advanced technology works for you under the hood."
+        answer: "Not at all. Our goal is to translate technical complexity into operational simplicity. We handle the engineering of the AI Core and back-end workflows so that you and your team can focus on growth using tools that are intuitive and easy to manage."
     },
     {
         question: "Can this system grow as my business scales?",
-        answer: "Yes. One of the biggest problems with standard software is that you eventually outgrow it. Our bespoke builds are modular. We can add new \"dots\" and build more \"bridges\" as your revenue increases and your operational needs evolve."
+        answer: "Absolutely. We specifically design your AI Infrastructure for future scale. Whether you double your customer base or enter a new market, your agentic systems are built to expand their capacity alongside your business trajectory."
     },
     {
         question: "How secure is my data once everything is connected?",
-        answer: "Security is a core pillar of our Bespoke IT Strategy. When we connect your systems, we ensure that data is handled with the same high-level security protocols used by enterprise systems, protecting your business, your data, and your customers."
+        answer: "Security is a pillar of our Engineering model. We build production-grade AI systems and RAG pipelines that integrate securely into your existing stack. By bridging your \"data islands\" professionally, we actually reduce the security risks associated with fragmented, manual data transfers."
     },
     {
-        question: "Will this make my business feel impersonal to my customers?",
-        answer: "It’s actually the opposite. By automating the \"manual grind,\" you and your staff have more time to provide a personal, high-touch service. The technology handles the data so the humans can handle the relationships, leading to higher client satisfaction."
+        question: "Will using AI make my business feel impersonal to my customers?",
+        answer: "Actually, it can make it feel more personal. Our AI agents are designed to be human-like, sounding and acting like real professionals. By handling routine queries instantly, they ensure your customers never have to wait for a response, while freeing up your human team for the high-touch interactions that truly matter."
     },
     {
         question: "How do I know if this investment is actually paying off?",
-        answer: "We focus on Value Creation. During our consultation, we identify the specific bottlenecks that are costing you time and money. When those gaps are closed and your team becomes more efficient, the return on your investment is measured through cost optimization and increased output."
+        answer: "We translate technical complexity into measurable outcomes. We track specific results such as Avg. ROI in the first year, hours saved per week, and your team's increased capacity to handle volume. If the system isn't driving your business trajectory forward, we evolve and optimize it until it does."
     }
 ];
 
@@ -156,7 +156,7 @@ const FAQsSection = () => {
                         Honest Answers <span className="italic">for Business Owners</span>
                     </h3>
                     <p className="text-sm max-w-[72ch] text-gray-600">
-                        You’re busy running a company, not a tech department. Here are the straight answers to the questions that matter most when you’re looking to stop the "manual grind" and start scaling.
+                        You're busy running a company, not a tech department. These are the straightforward answers to the questions that matter most when you're looking to stop the "manual grind" and start scaling with <strong className="font-semibold text-neutral-700">AI Infrastructure</strong>.
                     </p>
                 </div>
 

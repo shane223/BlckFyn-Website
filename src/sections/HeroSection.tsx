@@ -291,26 +291,26 @@ const HeroSection = () => {
       {/* Content Overlay */}
       <div className="relative z-10 h-full flex items-center px-6 lg:px-16">
         <div className="max-w-4xl">
-          <h1 className="heading-xl text-black mb-6 uppercase">
+          <h1 className="heading-lg text-black mb-6 uppercase">
             We Bridge The
             <br />Gap &amp; Connect
-            <br /> The Dots.
+            <br /> Your AI Core.
           </h1>
-          <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-light leading-relaxed max-w-2xl">
-            Closing the distance between your current operations and your future scale through Bespoke IT Strategy, Applied AI, and Seamless Automation
+          <p className="text-lg lg:text-xl text-gray-600 mb-8 font-light leading-relaxed max-w-2xl">
+            We shape your current IT landscape into a high-performance <strong className="font-semibold text-black">AI Infrastructure</strong> designed to win the next decade. By designing a <strong className="font-semibold text-black">Bespoke IT Strategy</strong> that deletes manual grind and connects your disconnected dots, we empower your team to handle <strong className="font-semibold text-black">10x the volume</strong> and turn every operation into a <strong className="font-semibold text-black">10x growth engine</strong>.
           </p>
-          <ul className="flex flex-col gap-3 text-sm lg:text-base font-semibold text-gray-800 tracking-wide">
+          <ul className="flex flex-col gap-3 text-xs lg:text-sm font-semibold text-gray-800 tracking-wide">
             <li className="flex items-center gap-3">
               <span className="w-2 h-2 bg-black rounded-full" />
-              <span>STRATEGIC <span className="text-gray-500 font-normal">(IT & AI Consultation)</span></span>
+              <span>STRATEGIC: <span className="text-gray-500 font-normal">AI Transformation Consulting</span></span>
             </li>
             <li className="flex items-center gap-3">
               <span className="w-2 h-2 bg-black rounded-full" />
-              <span>INTELLIGENT <span className="text-gray-500 font-normal">(Agentic App Development)</span></span>
+              <span>INTELLIGENT: <span className="text-gray-500 font-normal">Agentic Systems Engineering</span></span>
             </li>
             <li className="flex items-center gap-3">
               <span className="w-2 h-2 bg-black rounded-full" />
-              <span>CONNECTED <span className="text-gray-500 font-normal">(Digital Automation)</span></span>
+              <span>CONNECTED: <span className="text-gray-500 font-normal">Seamless Digital Automation</span></span>
             </li>
           </ul>
 
@@ -320,7 +320,7 @@ const HeroSection = () => {
               href="https://cal.com/dixieraizpacheco/15min"
               target="_blank"
               rel="noopener noreferrer"
-              className="button-animated relative inline-flex items-center justify-center overflow-hidden rounded-full transition-colors duration-300 whitespace-nowrap text-sm lg:text-base px-6 py-3"
+              className="button-animated relative inline-flex items-center justify-center overflow-hidden rounded-full transition-colors duration-300 whitespace-nowrap text-sm lg:text-base px-6 py-3 uppercase"
               aria-label="Let's discuss your challenge"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
