@@ -32,7 +32,7 @@ const WaveSection = () => {
       alpha: true,
     });
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(1); // Performance optimization on high DPI loops
 
     // === WIREFRAME WAVE TERRAIN ===
     const waveGroup = new THREE.Group();
@@ -173,8 +173,14 @@ const WaveSection = () => {
       lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
     };
 
+    const isIntersecting = { current: true };
+
     const animate = () => {
       animationId = requestAnimationFrame(animate);
+
+      // PAUSE RENDER LOOP IF NOT VISIBLE (Saves heavy CPU trigonometry)
+      if (!isIntersecting.current) return;
+
       const time = clock.getElapsedTime();
       const delta = clock.getDelta();
 
@@ -204,6 +210,7 @@ const WaveSection = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          isIntersecting.current = entry.isIntersecting;
           if (entry.isIntersecting) {
             const ratio = entry.intersectionRatio;
             targetScrollProgress.current = ratio;
@@ -233,6 +240,18 @@ const WaveSection = () => {
       observer.disconnect();
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationId);
+
+      // Strict Cleanup
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh || object instanceof THREE.Points || object instanceof THREE.Line || object instanceof THREE.LineSegments) {
+          object.geometry.dispose();
+          if (Array.isArray(object.material)) {
+            object.material.forEach(m => m.dispose());
+          } else {
+            object.material.dispose();
+          }
+        }
+      });
       renderer.dispose();
     };
   }, []);

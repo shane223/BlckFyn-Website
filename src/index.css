@@ -217,3 +217,16 @@
       transparent,
       rgba(255, 255, 255, 0.3));
 }
+
+/* Wizard Classes */
+.wizard-input {
+  @apply w-full bg-white/50 border border-gray-200 rounded-lg px-4 py-3 text-gray-900 transition-all focus:outline-none focus:ring-1 focus:border-gray-400 focus:ring-gray-400;
+}
+
+.industry-tile {
+  @apply flex flex-col items-center justify-center p-4 border border-gray-200 rounded-xl bg-white/50 text-gray-700 hover:border-gray-400 hover:bg-white transition-all cursor-pointer;
+}
+
+.industry-tile--selected {
+  @apply border-gray-900 bg-white text-gray-900 ring-1 ring-gray-900 scale-105;
+}

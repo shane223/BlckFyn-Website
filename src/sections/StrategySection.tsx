@@ -1,8 +1,9 @@
 import { useRef, useEffect, useState } from 'react';
-import emailjs from '@emailjs/browser';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import * as THREE from 'three';
 import ReactDOM from 'react-dom';
+import BlueprintWizard from '@/components/BlueprintWizard';
+import EnquiryWizard from '@/components/EnquiryWizard';
 
 const StrategySection = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -24,44 +25,13 @@ const StrategySection = () => {
     const targetScrollProgress = useRef(0);
 
     const [expandedCard, setExpandedCard] = useState<'blueprint' | 'enquiry' | null>(null);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
     // EmailJS Configuration - To be replaced by the user
     // See implementation_plan.md for instructions
-    const EMAILJS_SERVICE_ID = "service_placeholder";
-    const EMAILJS_TEMPLATE_ID_BLUEPRINT = "template_blueprint_placeholder";
-    const EMAILJS_TEMPLATE_ID_ENQUIRY = "template_enquiry_placeholder";
-    const EMAILJS_PUBLIC_KEY = "public_key_placeholder";
-
-    const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>, type: 'blueprint' | 'enquiry') => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        setSubmitStatus('idle');
-
-        try {
-            const templateId = type === 'blueprint' ? EMAILJS_TEMPLATE_ID_BLUEPRINT : EMAILJS_TEMPLATE_ID_ENQUIRY;
-
-            // In a real scenario with correct IDs this would send the email
-            // For now, we simulate a successful 1.5s network request if placeholders aren't replaced
-            if (EMAILJS_SERVICE_ID === "service_placeholder") {
-                await new Promise(resolve => setTimeout(resolve, 1500));
-            } else {
-                await emailjs.sendForm(EMAILJS_SERVICE_ID, templateId, e.currentTarget, EMAILJS_PUBLIC_KEY);
-            }
-
-            setSubmitStatus('success');
-            setTimeout(() => {
-                setExpandedCard(null);
-                setSubmitStatus('idle');
-            }, 3000);
-        } catch (error) {
-            console.error('Email send failed:', error);
-            setSubmitStatus('error');
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
+    const EMAILJS_SERVICE_ID = "service_1a3n15m";
+    const EMAILJS_TEMPLATE_ID_BLUEPRINT = "template_w0fp2kd";
+    const EMAILJS_TEMPLATE_ID_ENQUIRY = "template_gpyf37i";
+    const EMAILJS_PUBLIC_KEY = "ebe4q-RkFjdz9Hgf9";
 
     useEffect(() => {
         if (!canvasRef.current || !containerRef.current) return;
@@ -250,6 +220,10 @@ const StrategySection = () => {
 
         const animate = () => {
             animationId = requestAnimationFrame(animate);
+
+            // PAUSE RENDER LOOP IF NOT VISIBLE (Saves heavy CPU trigonometry)
+            if (!isIntersecting.current) return;
+
             const time = clock.getElapsedTime();
 
             // Smooth scroll progress
@@ -305,15 +279,12 @@ const StrategySection = () => {
             camera.position.y = Math.cos(time * 0.15) * 0.3;
             camera.lookAt(0, 0, 0);
 
-            // Camera subtle movement
             camera.position.x = Math.sin(time * 0.1) * 0.5;
             camera.position.y = Math.cos(time * 0.15) * 0.3;
             camera.lookAt(0, 0, 0);
 
-            // ONLY RENDER IF VISIBLE
-            if (isIntersecting.current) {
-                renderer.render(scene, camera);
-            }
+            // Render
+            renderer.render(scene, camera);
         };
 
         // Intersection Observer
@@ -500,12 +471,13 @@ const StrategySection = () => {
                             <motion.div
                                 key="expanded"
                                 layoutId={`${expandedCard}-card`}
-                                className="glass-card p-12 lg:p-16 overflow-y-auto"
+                                className="glass-card p-12 lg:p-16 overflow-y-auto w-[90vw] md:w-[80vw] lg:w-[55vw]"
                                 style={{
                                     position: 'fixed',
                                     top: '10vh',
-                                    left: '10vw',
-                                    width: '80vw',
+                                    left: 0,
+                                    right: 0,
+                                    margin: '0 auto',
                                     height: '80vh',
                                     zIndex: 9999,
                                 }}
@@ -520,147 +492,21 @@ const StrategySection = () => {
                                 </button>
 
                                 {expandedCard === 'blueprint' && (
-                                    <div className="h-full flex flex-col">
-                                        <p className="text-sm uppercase tracking-widest text-gray-500 font-semibold mb-4">Assessment</p>
-                                        <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 uppercase tracking-tight mb-8">Request Your Strategic Blueprint</h2>
-
-                                        <form onSubmit={(e) => handleFormSubmit(e, 'blueprint')} className="flex-1 overflow-y-auto pr-4 custom-scrollbar space-y-6">
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                <div className="space-y-2">
-                                                    <label htmlFor="name" className="text-sm font-semibold text-gray-900">Name</label>
-                                                    <input required type="text" name="user_name" id="name" className="w-full bg-white/50 border border-gray-200 rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 transition-shadow" placeholder="John Doe" />
-                                                </div>
-                                                <div className="space-y-2">
-                                                    <label htmlFor="email" className="text-sm font-semibold text-gray-900">Business Email</label>
-                                                    <input required type="email" name="user_email" id="email" className="w-full bg-white/50 border border-gray-200 rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 transition-shadow" placeholder="john@company.com" />
-                                                </div>
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <label htmlFor="industry" className="text-sm font-semibold text-gray-900">Your Industry</label>
-                                                <select required name="industry" id="industry" className="w-full bg-white/50 border border-gray-200 rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 transition-shadow appearance-none">
-                                                    <option value="" disabled selected>Select your industry</option>
-                                                    <option value="Wellness">Wellness</option>
-                                                    <option value="Professional/Education">Professional/Education</option>
-                                                    <option value="Home/Trade Services">Home/Trade Services</option>
-                                                    <option value="Food/Retail">Food/Retail</option>
-                                                    <option value="Other">Other</option>
-                                                </select>
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <label htmlFor="landscape" className="text-sm font-semibold text-gray-900">The Fragmented Landscape</label>
-                                                <p className="text-xs text-gray-500 mb-1">Which systems are currently "islands" that don't talk to each other? (e.g., CRM, Finance, Inventory)</p>
-                                                <textarea required name="fragmented_landscape" id="landscape" rows={2} className="w-full bg-white/50 border border-gray-200 rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 transition-shadow resize-none" placeholder="Our CRM and accounting software require manual syncing..."></textarea>
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <label htmlFor="friction" className="text-sm font-semibold text-gray-900">The Manual Friction</label>
-                                                <p className="text-xs text-gray-500 mb-1">What specific repetitive tasks currently take your team 30+ hours a week?</p>
-                                                <textarea required name="manual_friction" id="friction" rows={2} className="w-full bg-white/50 border border-gray-200 rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 transition-shadow resize-none" placeholder="Data entry from emails into our database..."></textarea>
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <label htmlFor="ambition" className="text-sm font-semibold text-gray-900">Scaling Ambition</label>
-                                                <p className="text-xs text-gray-500 mb-1">If we deleted your manual work today, what is your primary goal for the next 12 months?</p>
-                                                <textarea required name="scaling_ambition" id="ambition" rows={2} className="w-full bg-white/50 border border-gray-200 rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 transition-shadow resize-none" placeholder="Achieve 10x capacity without expanding headcount..."></textarea>
-                                            </div>
-
-                                            <div className="pt-4 border-t border-gray-200">
-                                                {submitStatus === 'success' ? (
-                                                    <div className="bg-green-50 text-green-800 p-4 rounded-lg flex items-center justify-center font-medium">
-                                                        Blueprint Request Sent Successfully! We will be in touch shortly.
-                                                    </div>
-                                                ) : submitStatus === 'error' ? (
-                                                    <div className="bg-red-50 text-red-800 p-4 rounded-lg flex items-center justify-center font-medium">
-                                                        Error sending request. Please try again or email us directly.
-                                                    </div>
-                                                ) : (
-                                                    <button
-                                                        type="submit"
-                                                        disabled={isSubmitting}
-                                                        className="w-full bg-gray-900 hover:bg-black text-white py-4 rounded-lg font-bold text-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
-                                                    >
-                                                        {isSubmitting ? (
-                                                            <>
-                                                                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                                                                Sending Request...
-                                                            </>
-                                                        ) : (
-                                                            "Request Blueprint"
-                                                        )}
-                                                    </button>
-                                                )}
-                                            </div>
-                                        </form>
-                                    </div>
+                                    <BlueprintWizard
+                                        onClose={() => setExpandedCard(null)}
+                                        emailjsServiceId={EMAILJS_SERVICE_ID}
+                                        emailjsTemplateId={EMAILJS_TEMPLATE_ID_BLUEPRINT}
+                                        emailjsPublicKey={EMAILJS_PUBLIC_KEY}
+                                    />
                                 )}
 
                                 {expandedCard === 'enquiry' && (
-                                    <div className="h-full flex flex-col">
-                                        <p className="text-sm uppercase tracking-widest text-gray-500 font-semibold mb-4">Contact</p>
-                                        <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 uppercase tracking-tight mb-8">Send A General Enquiry</h2>
-                                        <p className="text-gray-700 text-lg leading-relaxed mb-8">
-                                            Start a direct conversation about a specific technical or strategic challenge. Let's explore how we can bridge your gaps and deploy an <strong className="text-gray-900">AI Core</strong> tailored to your unique business trajectory.
-                                        </p>
-
-                                        <form onSubmit={(e) => handleFormSubmit(e, 'enquiry')} className="flex-1 overflow-y-auto pr-4 custom-scrollbar space-y-6">
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                <div className="space-y-2">
-                                                    <label htmlFor="enquiry_name" className="text-sm font-semibold text-gray-900">Name</label>
-                                                    <input required type="text" name="user_name" id="enquiry_name" className="w-full bg-white/50 border border-gray-200 rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 transition-shadow" placeholder="John Doe" />
-                                                </div>
-                                                <div className="space-y-2">
-                                                    <label htmlFor="enquiry_email" className="text-sm font-semibold text-gray-900">Business Email</label>
-                                                    <input required type="email" name="user_email" id="enquiry_email" className="w-full bg-white/50 border border-gray-200 rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 transition-shadow" placeholder="john@company.com" />
-                                                </div>
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <label htmlFor="interest" className="text-sm font-semibold text-gray-900">Primary Interest</label>
-                                                <select required name="primary_interest" id="interest" className="w-full bg-white/50 border border-gray-200 rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 transition-shadow appearance-none">
-                                                    <option value="" disabled selected>Select an area of interest</option>
-                                                    <option value="AI Transformation">AI Transformation</option>
-                                                    <option value="Agentic Engineering">Agentic Engineering</option>
-                                                    <option value="Digital Growth Engines">Digital Growth Engines</option>
-                                                    <option value="Other">Other</option>
-                                                </select>
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <label htmlFor="challenge" className="text-sm font-semibold text-gray-900">Your Challenge</label>
-                                                <p className="text-xs text-gray-500 mb-1">Briefly describe the primary operational "gap" you are looking to close.</p>
-                                                <textarea required name="challenge_description" id="challenge" rows={4} className="w-full bg-white/50 border border-gray-200 rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 transition-shadow resize-none" placeholder="We need to automate..."></textarea>
-                                            </div>
-
-                                            <div className="pt-4 border-t border-gray-200">
-                                                {submitStatus === 'success' ? (
-                                                    <div className="bg-green-50 text-green-800 p-4 rounded-lg flex items-center justify-center font-medium">
-                                                        Enquiry Sent Successfully! We will be in touch shortly.
-                                                    </div>
-                                                ) : submitStatus === 'error' ? (
-                                                    <div className="bg-red-50 text-red-800 p-4 rounded-lg flex items-center justify-center font-medium">
-                                                        Error sending enquiry. Please try again or email us directly.
-                                                    </div>
-                                                ) : (
-                                                    <button
-                                                        type="submit"
-                                                        disabled={isSubmitting}
-                                                        className="w-full bg-gray-900 hover:bg-black text-white py-4 rounded-lg font-bold text-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
-                                                    >
-                                                        {isSubmitting ? (
-                                                            <>
-                                                                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                                                                Sending Enquiry...
-                                                            </>
-                                                        ) : (
-                                                            "Send Enquiry"
-                                                        )}
-                                                    </button>
-                                                )}
-                                            </div>
-                                        </form>
-                                    </div>
+                                    <EnquiryWizard
+                                        onClose={() => setExpandedCard(null)}
+                                        emailjsServiceId={EMAILJS_SERVICE_ID}
+                                        emailjsTemplateId={EMAILJS_TEMPLATE_ID_ENQUIRY}
+                                        emailjsPublicKey={EMAILJS_PUBLIC_KEY}
+                                    />
                                 )}
                             </motion.div>
                         </>
