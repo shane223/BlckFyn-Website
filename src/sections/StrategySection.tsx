@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import * as THREE from 'three';
 import ReactDOM from 'react-dom';
+import { ChartNoAxesCombined, BadgeQuestionMark } from 'lucide-react';
 import BlueprintWizard from '@/components/BlueprintWizard';
 import EnquiryWizard from '@/components/EnquiryWizard';
 
@@ -341,7 +342,7 @@ const StrategySection = () => {
 
     return (
         <>
-            <section ref={containerRef} className="relative w-full min-h-screen overflow-hidden">
+            <section ref={containerRef} className="relative w-full min-h-[110vh] overflow-hidden">
 
                 {/* Parallax Background */}
                 <motion.div
@@ -377,7 +378,7 @@ const StrategySection = () => {
                 />
 
                 {/* Content Overlay */}
-                <div className="relative z-10 min-h-screen flex items-center px-6 lg:px-16 py-12">
+                <div className="relative z-10 min-h-[110vh] flex items-center px-6 lg:px-16 py-12">
                     <div className="w-full max-w-7xl mx-auto">
                         <div className="grid lg:grid-cols-2 gap-16 items-start">
 
@@ -415,7 +416,10 @@ const StrategySection = () => {
                                     transition={{ duration: 0.4, ease: 'easeInOut' }}
                                     whileHover={!expandedCard ? { scale: 1.02 } : {}}
                                 >
-                                    <h3 className="text-2xl text-gray-900 font-bold mb-4">REQUEST YOUR STRATEGIC BLUEPRINT</h3>
+                                    <h3 className="text-2xl text-gray-900 font-bold mb-4 flex items-center gap-4">
+                                        <ChartNoAxesCombined className="w-10 h-10 text-blue-600 shrink-0" />
+                                        REQUEST YOUR STRATEGIC BLUEPRINT
+                                    </h3>
                                     <p className="text-gray-700">
                                         Identify your 'disconnected dots' through our automated discovery tool. Receive a bespoke PDF roadmap designed to delete your manual grind and turn your infrastructure into a powerful growth engine.
                                     </p>
@@ -436,7 +440,10 @@ const StrategySection = () => {
                                     transition={{ duration: 0.4, ease: 'easeInOut' }}
                                     whileHover={!expandedCard ? { scale: 1.02 } : {}}
                                 >
-                                    <h3 className="text-2xl text-gray-900 font-bold mb-4">SEND A GENERAL ENQUIRY</h3>
+                                    <h3 className="text-2xl text-gray-900 font-bold mb-4 flex items-center gap-4">
+                                        <BadgeQuestionMark className="w-10 h-10 text-blue-600 shrink-0" />
+                                        SEND A GENERAL ENQUIRY
+                                    </h3>
                                     <p className="text-gray-700">
                                         Start a direct conversation about a specific technical or strategic challenge. Let's explore how we can bridge your gaps and deploy an <strong className="text-gray-900">AI Core</strong> tailored to your unique business trajectory.
                                     </p>
